@@ -4,9 +4,9 @@ Frotend da aplicação  gerencimento de finanças pessoais.
 
 - Frameworks
 
-* Angular 11.2.2
-* Material
-* Nebular UI 7.0.0 
+* Angular 11.2.5  https://angular.io/
+* Material https://material.angular.io/
+* Nebular UI 7.0.0 https://akveo.github.io/nebular/
 
 Api backend - [https://github.com/Magaiwer/personal-manager]
 
