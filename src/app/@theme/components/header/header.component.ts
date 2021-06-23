@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
+import {NbAuthJWTToken, NbAuthService} from '@nebular/auth';
 
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import {NbAuthService} from '@nebular/auth';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -39,7 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [ { title: 'Perfil' }, { title: 'Log out' } ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -48,6 +49,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private layoutService: LayoutService,
               private breakpointService: NbMediaBreakpointsService,
               private authService: NbAuthService,
+              private router: Router,
   ) {
   }
 
@@ -105,7 +107,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private onItemSelection( title ) {
     if ( title === 'Log out' ) {
-      this.authService.logout('email');
+      console.info('logout', this.authService);
+      this.router.navigate(['/auth/login']);
+      localStorage.clear();
     }
   }
 }
