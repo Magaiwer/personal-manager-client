@@ -20,6 +20,12 @@ const routes: Routes = [{
         .then(m => m.CategoryModule),
     },
     {
+      path: 'transaction',
+      canActivate: [AuthGuard],
+      loadChildren: () => import('../pages/transaction/transaction.module')
+        .then(m => m.TransactionModule),
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',

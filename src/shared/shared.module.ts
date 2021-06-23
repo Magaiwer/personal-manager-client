@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {
+  NbAccordionModule,
   NbActionsModule,
   NbButtonModule,
   NbCardModule,
@@ -23,6 +24,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatSortModule} from '@angular/material/sort';
+import {FormFieldErrorComponent} from './components/form-field-error/form-field-error.component';
+import {FiltersComponent} from './components/filters/filters.component';
+
 
 @NgModule({
   imports: [
@@ -53,6 +57,7 @@ import {MatSortModule} from '@angular/material/sort';
     MatInputModule,
     MatSortModule,
     FlexLayoutModule,
+    NbAccordionModule,
   ],
   exports: [
     ThemeModule,
@@ -82,8 +87,14 @@ import {MatSortModule} from '@angular/material/sort';
     MatInputModule,
     MatSortModule,
     FlexLayoutModule,
+    FormFieldErrorComponent,
+    NbAccordionModule,
+    FiltersComponent,
   ],
-  declarations: [],
+  declarations: [
+    FormFieldErrorComponent,
+    FiltersComponent,
+  ],
 })
 export class SharedModule {
 }

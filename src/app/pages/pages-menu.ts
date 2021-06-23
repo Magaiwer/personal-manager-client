@@ -21,7 +21,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Transactions',
-        link: '/',
+        link: '/pages/transaction',
       },
       /*{
         title: 'Form Inputs',
