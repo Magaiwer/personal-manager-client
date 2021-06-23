@@ -10,5 +10,6 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:9000/',
+  // baseUrl: 'http://localhost:9000/',
+  baseUrl: 'http://177.44.248.64:9001/',
 };
