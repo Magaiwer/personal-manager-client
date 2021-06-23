@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        <div class="row">
+          <div class="col-md-5">
+
+            <button mat-icon-button class="link back-link" (click)="backClicked()">
+              <nb-icon icon="arrow-back"></nb-icon>
+            </button>
+
+          </div>
+          <div   class="col-md-6 pt-2">
+            <span class="text-lg-center"> Lançamento de Receitas e Despesas</span>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="resourceForm" (ngSubmit)="onSubmit()">
+
+          <div class="form-row">
+            <div class="form-group col-md-8">
+              <label for="name" class="label">Lançamento</label>
+              <input type="text" nbInput fullWidth id="name" placeholder="nome do lançamento" formControlName="name"
+                     [status]="resourceForm.controls.name.dirty ? (resourceForm.controls.name.invalid  ? 'danger' : 'success') : 'basic'">
+
+              <ng-container class="caption status-danger">
+                <p class="caption status-danger"
+                   *ngIf="resourceForm.controls.name.errors?.required && resourceForm.controls.name.touched">
+                  Nome do lançamento é obrigatório!
+                </p>
+              </ng-container>
+
+              <ng-container>
+                <p class="caption status-danger" *ngIf="resourceForm.controls.name.hasError('minlength')">
+                  Forneça pelo menos 3 caracteres
+                </p>
+              </ng-container>
+
+            </div>
+
+            <div class="form-group col-md-4">
+              <label for="amount" class="label">Valor</label>
+              <input type="text" nbInput fullWidth id="amount"  placeholder="valor"
+                     formControlName="amount"
+                     currencyMask>
+
+            </div>
+
+
+          </div>
+
+          <div class="form-row">
+            <div class="form-group  col-md-8">
+              <label class="label" for="categoryId">Categoria</label>
+
+              <nb-select  fullWidth id="categoryId" formControlName="categoryId" >
+                <nb-option  *ngFor="let category of categories"
+                            [value]="category.id">{{ category.name }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label for="data" class="label">Data</label>
+              <input id="data" nbInput fullWidth  placeholder="data do lançamento"
+                     [nbDatepicker]="formpicker"
+                     formControlName="date"
+
+              >
+              <nb-datepicker   #formpicker ></nb-datepicker>
+            </div>
+
+
+          </div>
+
+            <div class="form-group col-md-9">
+              <label for="tipo" class="label">Tipo</label>
+              <div class="form-row">
+              <nb-radio-group id="tipo" class="form-check-inline" formControlName="type">
+                <nb-radio
+                  *ngFor="let option of options"
+                  [value]="option.value">
+                  {{ option.label }}
+                </nb-radio>
+              </nb-radio-group>
+            </div>
+          </div>
+
+
+
+          <div class="form-group">
+              <button nbButton hero status="primary"
+                      >
+                Salvar
+              </button>
+          </div>
+
+          <pre>{{resourceForm.valueChanges |async | json}}</pre>
+        </form>
+
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+</div>

@@ -1,0 +1,98 @@
+<nb-card>
+
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-5">
+
+        <button mat-icon-button [routerLink]="['new']" routerLinkActive="router-link-active">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="col-md-6 pt-2">
+        <span class="text-lg-center"> Listagem de Transações</span>
+      </div>
+    </div>
+    <ngx-filters></ngx-filters>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <div fxLayout="column" class="p-2">
+
+      <div class=" table table-hover  mat-elevation-z8  ">
+        <table mat-table [dataSource]="dataSource" matSort class="table p-2  mat-elevation-z8">
+
+          <div matColumnDef="name">
+            <th *matHeaderCellDef mat-sort-header> Lançamento</th>
+            <td *matCellDef="let element">
+              <span class="font-weight-bold">{{element.name}}</span>
+              <br>
+              <small class="text-success ">{{element.date | date:"dd/MM/yyyy"}}</small>
+              <br>
+              <span class="break-line" *ngIf="element.description">{{element.description}}</span>
+            </td>
+            <td *matFooterCellDef>
+              <span class="font-weight-bold"> Saldo </span>
+            </td>
+          </div>
+
+          <ng-container matColumnDef="category">
+            <th *matHeaderCellDef mat-sort-header> Categoria</th>
+            <td *matCellDef="let element">
+              <span>{{element.category.name}}</span>
+            </td>
+            <td *matFooterCellDef></td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th class="w-15" *matHeaderCellDef mat-sort-header> Valor</th>
+            <td *matCellDef="let element">
+              <strong [class.text-success]="!getClassType(element)"
+                      [class.text-danger]="getClassType(element)">
+                <span>{{element.amount  | currency : 'BRL'}}</span>
+              </strong>
+            </td>
+            <td *matFooterCellDef>
+              <strong [class.text-success]="getBalance() > 0"
+                      [class.text-danger]="getBalance() < 0">
+                <span> {{getBalance() | currency : 'BRL' }}</span>
+              </strong>
+
+            </td>
+          </ng-container>
+
+          <!-- Actions-->
+          <ng-container matColumnDef="actions">
+            <th class="table-actions" *matHeaderCellDef>Ações</th>
+            <td class="w-15" *matCellDef="let element">
+              <div class="table-actions">
+                <button [routerLink]="[element.id, 'edit']" mat-icon-button class="iconbutton" color="primary">
+                  <nb-icon icon="edit"></nb-icon>
+                </button>
+                <button mat-icon-button (click)="onDelete(element)" class="iconbutton" color="warn">
+                  <nb-icon icon="trash"></nb-icon>
+                </button>
+              </div>
+            </td>
+            <td *matFooterCellDef></td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns" class="example-first-footer-row"></tr>
+        </table>
+        <mat-paginator [length]="recordCount"
+                       [pageSize]="pageSize"
+                       [pageSizeOptions]="displayedPageSizeOptions">
+        </mat-paginator>
+      </div>
+
+    </div>
+  </nb-card-body>
+
+
+</nb-card>
+
+
+
+
