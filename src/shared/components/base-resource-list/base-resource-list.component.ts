@@ -8,6 +8,7 @@ import {CustomDataSource} from '../../custom-datasource/custom-datasource';
 
 import {merge} from 'rxjs';
 import {take, tap} from 'rxjs/operators';
+import {PageableWrapper} from '../../service/pageable-wrapper';
 
 @Component({
   template: '',
@@ -19,9 +20,10 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
   public dataSource: CustomDataSource<T>;
   public displayedColumns = Array<string>();
   public displayedPageSizeOptions = [5, 10, 20, 25, 50];
-  public pageSize = 5;
+  public pageSize = 20;
   public recordCount: number;
   public isPageable: boolean = true;
+  public resources: T[];
 
   public showSearch = false;
 
@@ -32,6 +34,7 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
   }
 
   ngOnInit() {
+    this.loadResources();
     this.dataSource.loadDataSource(this.displayedColumns[0], 'asc', 0, this.pageSize, this.isPageable);
     this.dataSource.recordCount$.subscribe(value => this.recordCount = value);
   }
@@ -89,4 +92,9 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
         );
     }
   }
+
+  loadResources() {
+    this.dataSource.data.asObservable().subscribe(d => this.resources = d);
+  }
+
 }

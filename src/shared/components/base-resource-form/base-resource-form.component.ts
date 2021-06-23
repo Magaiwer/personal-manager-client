@@ -1,11 +1,12 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {NbComponentStatus, NbToastrService} from '@nebular/theme';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {Component, EventEmitter, Injector, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, Injector, OnDestroy, OnInit} from '@angular/core';
 import {switchMap} from 'rxjs/operators';
 
 import {BaseResourceModel} from '../../model/base-resource.model';
 import {BaseResourceService} from '../../service/base-resource.service';
+import {interval} from 'rxjs';
 
 @Component({
   template: '',
@@ -13,12 +14,12 @@ import {BaseResourceService} from '../../service/base-resource.service';
 export abstract class BaseResourceFormComponent<T extends BaseResourceModel> implements OnInit, OnDestroy {
   resourceForm: FormGroup;
   currentAction: string;
-  private baseResource: T;
   protected route: ActivatedRoute;
 
   protected router: Router;
   protected formBuilder: FormBuilder;
   private toastService: NbToastrService;
+  public resource: T;
 
   static resourceLoadedEmitter = new EventEmitter();
 
@@ -58,8 +59,13 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
         .subscribe(
           resource => {
             BaseResourceFormComponent.resourceLoadedEmitter.emit(resource);
-            this.baseResource = resource;
-            this.resourceForm.patchValue(resource); // binds loaded resource data to resourceForm
+            this.resource = resource;
+            console.info('Edit', this.resource);
+            // @ts-ignore
+            this.resourceForm.controls['date']?.patchValue(this.textToDate(this.resource?.date));
+            // @ts-ignore
+            this.resourceForm.controls['categoryId']?.patchValue((this.resource?.category.id));
+            this.resourceForm.patchValue(resource, {emitEvent: true});
           },
           error => this.showToast('danger', 'Ocorreu um erro no servidor, tente mais tarde.'),
         )
@@ -76,10 +82,6 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
         this.save(resource);
       }
     }
-  }
-
-  get resource() {
-    return this.baseResource;
   }
 
   private save(resource: T) {
@@ -101,10 +103,10 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
   protected actionsForSuccess(message: string) {
     this.showToast('success', message);
     this.reset();
-/*    const baseComponentPath: string = this.route.snapshot.parent.url[0].path;
-    this.router.navigateByUrl(baseComponentPath, {skipLocationChange: false}).then(
-      () => this.router.navigate([baseComponentPath]),
-    );*/
+    /*    const baseComponentPath: string = this.route.snapshot.parent.url[0].path;
+        this.router.navigateByUrl(baseComponentPath, {skipLocationChange: false}).then(
+          () => this.router.navigate([baseComponentPath]),
+        );*/
   }
 
   protected actionsForError(error) {
@@ -123,6 +125,10 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
 
   protected showToast(status: NbComponentStatus, message: String) {
     this.toastService.show(message, null, {status});
+  }
+
+  private textToDate(dateStr: string) {
+    return new Date(dateStr);
   }
 
   protected abstract buildResourceForm(): void;
