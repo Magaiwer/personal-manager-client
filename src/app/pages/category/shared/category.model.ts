@@ -1,6 +1,12 @@
-export interface Category {
-  id?: number;
-  name?: string;
-  description?: string;
+import {BaseResourceModel} from '../../../../shared/model/base-resource.model';
+
+export class Category extends BaseResourceModel {
+  constructor(public id?: number,
+              public name?: String,
+              public description?: String,
+  ) {
+    super();
+  }
+
 }
 
