@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Perfil' }, { title: 'Log out' } ];
+  userMenu = [ { title: 'Perfil' }, { title: 'Sair' } ];
 
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
@@ -106,8 +106,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   private onItemSelection( title ) {
-    if ( title === 'Log out' ) {
-      console.info('logout', this.authService);
+    if ( title === 'Sair' ) {
       this.router.navigate(['/auth/login']);
       localStorage.clear();
     }

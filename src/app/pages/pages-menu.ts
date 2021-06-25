@@ -20,7 +20,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/category/',
       },
       {
-        title: 'Transactions',
+        title: 'Lançamentos',
         link: '/pages/transaction',
       },
       /*{
