@@ -87,7 +87,7 @@ const formSetting: any = {
           },
           logout: {
             redirect: {
-              success: '/login',
+              success: '/auth/login',
               failure: null,
             },
           },
