@@ -52,3 +52,13 @@ jobs:
         run: docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
       - name: Publish Docker image
         run: docker push $REPO
+
+  deploy:
+    name: DEPLOY CLIENT homologacao - post webhook call
+    runs-on: ubuntu-20.04
+    needs: [docker]
+    steps:
+      - name: Deploy docker container webhook
+        uses: joelwmale/webhook-action@master
+        with:
+          url: ${{ secrets.WEBHOOK_URL_HOMOLOG }}
