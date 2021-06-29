@@ -8,10 +8,10 @@ on:
   
 jobs:
   deploy:
-    name: Deploy on server production - post webhook call
+    name: Deploy CLIENT production - post webhook call
     runs-on: ubuntu-latest
     steps:
       - name: Post webhook
         uses: joelwmale/webhook-action@master
         with:
-          url: ${{ secrets.DOCKER_WEBHOOK_URL_PROD }}
+          url: ${{ secrets.WEBHOOK_URL_PROD }}
