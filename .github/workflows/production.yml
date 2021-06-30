@@ -1,0 +1,17 @@
+name: Angular Deploy production
+
+on:
+  push:
+    branches: [ master ]
+
+  workflow_dispatch:
+  
+jobs:
+  deploy:
+    name: Deploy CLIENT production - post webhook call
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post webhook
+        uses: joelwmale/webhook-action@master
+        with:
+          url: ${{ secrets.WEBHOOK_URL_PROD }}
