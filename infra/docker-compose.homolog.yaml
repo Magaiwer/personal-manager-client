@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  front-homolog:
+    image: magaiwer/personal-manager-client:latest
+    container_name: front-homolog
+    environment:
+      - API_PORT=9001
+    ports:
+      - 81:80
+      - 444:443
