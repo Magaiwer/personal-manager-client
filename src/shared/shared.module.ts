@@ -26,6 +26,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatSortModule} from '@angular/material/sort';
 import {FormFieldErrorComponent} from './components/form-field-error/form-field-error.component';
 import {FiltersComponent} from './components/filters/filters.component';
+import {CalendarModule} from 'primeng/calendar';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import {FiltersComponent} from './components/filters/filters.component';
     MatSortModule,
     FlexLayoutModule,
     NbAccordionModule,
+    CalendarModule,
   ],
   exports: [
     ThemeModule,
