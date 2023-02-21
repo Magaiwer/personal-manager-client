@@ -11,6 +11,7 @@ export class Transaction extends BaseResourceModel {
     public date?: string,
     public enabled?: boolean,
     public categoryId?: number,
+    public accountId?: number,
     public category?: Category,
   ) {
     super();

@@ -1,7 +1,7 @@
 import {ActivatedRoute, Router} from '@angular/router';
 import {NbComponentStatus, NbToastrService} from '@nebular/theme';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {Component, EventEmitter, Inject, Injector, OnDestroy, OnInit} from '@angular/core';
+import { Component, EventEmitter, Inject, Injector, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import {switchMap} from 'rxjs/operators';
 
 import {BaseResourceModel} from '../../model/base-resource.model';
@@ -18,6 +18,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
 
   protected router: Router;
   protected formBuilder: FormBuilder;
+  protected renderer: Renderer2;
   private toastService: NbToastrService;
   public resource: T;
 
@@ -30,6 +31,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     this.router = this.injector.get(Router);
     this.formBuilder = this.injector.get(FormBuilder);
     this.toastService = this.injector.get(NbToastrService);
+    this.renderer = this.injector.get(Renderer2);
   }
 
   ngOnInit() {
@@ -125,6 +127,10 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
 
   protected showToast(status: NbComponentStatus, message: String) {
     this.toastService.show(message, null, {status});
+  }
+
+  protected setFocus(attr: String) {
+    this.renderer.selectRootElement(`#${attr}`).focus();
   }
 
   private textToDate(dateStr: string) {

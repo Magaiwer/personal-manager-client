@@ -1,12 +1,14 @@
-import {Component, Injector, OnInit} from '@angular/core';
+import { Component, Injector, OnInit, AfterViewInit } from '@angular/core';
 import {Location} from '@angular/common';
-import {Validators} from '@angular/forms';
+import { Validators, FormControl } from '@angular/forms';
 
 import {BaseResourceFormComponent} from '../../../../shared/components/base-resource-form/base-resource-form.component';
 import {Transaction} from '../shared/transaction.model';
 import {TransactionService} from '../shared/transaction.service';
 import {Category} from '../../category/shared/category.model';
+import {Account} from "../../account/shared/account.model";
 import {CategoryService} from '../../category/shared/category.service';
+import {AccountService} from "../../account/shared/account.service";
 import {PageableWrapper} from '../../../../shared/service/pageable-wrapper';
 
 @Component({
@@ -14,21 +16,24 @@ import {PageableWrapper} from '../../../../shared/service/pageable-wrapper';
   templateUrl: './transaction-form.component.html',
   styleUrls: ['./transaction-form.component.scss'],
 })
-export class TransactionFormComponent extends BaseResourceFormComponent<Transaction> implements OnInit {
+export class TransactionFormComponent extends BaseResourceFormComponent<Transaction> implements OnInit, AfterViewInit {
   categories: Array<Category>;
+  accounts: Array<Account>;
   options = [];
-  public category: Category;
+  disableAccount: boolean = false;
 
   constructor(protected transactionService: TransactionService,
               protected injector: Injector,
               protected location: Location,
               protected categoryService: CategoryService,
+              protected accountService: AccountService,
   ) {
     super(injector, transactionService);
   }
 
   ngOnInit(): void {
     this.loadCategories();
+    this.loadAccounts();
     super.ngOnInit();
     this.options = this.typeOptions;
     BaseResourceFormComponent.resourceLoadedEmitter
@@ -46,10 +51,11 @@ export class TransactionFormComponent extends BaseResourceFormComponent<Transact
       id: [],
       name: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
       amount: ['', Validators.required],
-     // category: this.categoryFormGroup,
+      // category: this.categoryFormGroup,
       type: ['EXPENSE', Validators.required],
       date: [new Date(), Validators.required],
       categoryId: [null, [Validators.required]],
+      accountId: [null, [Validators.required]],
     });
   }
 
@@ -67,6 +73,18 @@ export class TransactionFormComponent extends BaseResourceFormComponent<Transact
     );
   }
 
+  private loadAccounts() {
+    this.accountService.findAll().subscribe(
+      (accounts: PageableWrapper) => {
+        this.accounts = accounts.content;
+        if (this.accounts.length == 1 && !this.accountIdControl.value ) {
+          this.accountIdControl.setValue(this.accounts[0]?.id);
+          this.disableAccount = true;
+        }
+      }
+    );
+  }
+
   get typeOptions(): Array<any> {
     return Object.entries(Transaction.TYPES).map(
       ([label, value]) => {
@@ -78,13 +96,19 @@ export class TransactionFormComponent extends BaseResourceFormComponent<Transact
     );
   }
 
-  get categoryFormGroup() {
+  ngAfterViewInit() {
+    this.setFocus('name');
+  }
+
+/*   get categoryFormGroup() {
     console.info('form group category', this.category);
     return this.formBuilder.group({
       id: [this.category?.id, Validators.required],
     });
+  } */
+  get accountIdControl() {
+    return this.resourceForm.get('accountId');
   }
-
   protected creationPageTitle(): string {
     return 'Cadastro de Novo Lançamento';
   }

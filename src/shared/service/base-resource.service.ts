@@ -1,4 +1,4 @@
-import {Injectable, Injector, Type} from '@angular/core';
+import { Injectable, Injector, Type } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {BaseResourceModel} from '../model/base-resource.model';
 

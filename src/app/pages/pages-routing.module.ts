@@ -26,6 +26,12 @@ const routes: Routes = [{
         .then(m => m.TransactionModule),
     },
     {
+      path: 'account',
+      canActivate: [AuthGuard],
+      loadChildren: () => import('../pages/account/account.module')
+        .then(m => m.AccountModule),
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',

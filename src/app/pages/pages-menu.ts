@@ -16,6 +16,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     pathMatch: 'prefix',
     children: [
       {
+        title: 'Conta',
+        link: '/pages/account',
+      },
+      {
         title: 'Categorias',
         link: '/pages/category/',
       },

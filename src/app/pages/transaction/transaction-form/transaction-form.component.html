@@ -10,7 +10,7 @@
             </button>
 
           </div>
-          <div   class="col-md-6 pt-2">
+          <div class="col-md-6 pt-2">
             <span class="text-lg-center"> Lançamento de Receitas e Despesas</span>
           </div>
         </div>
@@ -19,9 +19,24 @@
         <form [formGroup]="resourceForm" (ngSubmit)="onSubmit()">
 
           <div class="form-row">
+            <div class="form-group  col-md-12" >
+              <label class="label" for="accountId">Conta</label>
+
+              <nb-select fullWidth id="accountId" formControlName="accountId" [disabled]="disableAccount">
+                <nb-option *ngFor="let account of accounts"
+                           [value]="account.id">{{ account.name }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+          </div>
+
+          <div class="form-row">
             <div class="form-group col-md-8">
               <label for="name" class="label">Lançamento</label>
-              <input type="text" nbInput fullWidth id="name" placeholder="nome do lançamento" formControlName="name"
+              <input type="text" nbInput fullWidth id="name"
+                     placeholder="nome do lançamento"
+                     formControlName="name"
                      [status]="resourceForm.controls.name.dirty ? (resourceForm.controls.name.invalid  ? 'danger' : 'success') : 'basic'">
 
               <ng-container class="caption status-danger">
@@ -41,7 +56,7 @@
 
             <div class="form-group col-md-4">
               <label for="amount" class="label">Valor</label>
-              <input type="text" nbInput fullWidth id="amount"  placeholder="valor"
+              <input type="text" nbInput fullWidth id="amount" placeholder="valor"
                      formControlName="amount"
                      currencyMask>
 
@@ -53,28 +68,28 @@
             <div class="form-group  col-md-8">
               <label class="label" for="categoryId">Categoria</label>
 
-              <nb-select  fullWidth id="categoryId" formControlName="categoryId" >
-                <nb-option  *ngFor="let category of categories"
-                            [value]="category.id">{{ category.name }}
+              <nb-select fullWidth id="categoryId" formControlName="categoryId">
+                <nb-option *ngFor="let category of categories"
+                           [value]="category.id">{{ category.name }}
                 </nb-option>
               </nb-select>
             </div>
 
             <div class="form-group col-md-4">
               <label for="data" class="label">Data</label>
-              <input id="data" nbInput fullWidth  placeholder="data do lançamento"
+              <input id="data" nbInput fullWidth placeholder="data do lançamento"
                      [nbDatepicker]="formpicker"
                      formControlName="date"
 
               >
-              <nb-datepicker   #formpicker ></nb-datepicker>
+              <nb-datepicker #formpicker></nb-datepicker>
             </div>
 
           </div>
 
-            <div class="form-group col-md-9">
-              <label for="tipo" class="label">Tipo</label>
-              <div class="form-row">
+          <div class="form-group col-md-9">
+            <label for="tipo" class="label">Tipo</label>
+            <div class="form-row">
               <nb-radio-group id="tipo" class="form-check-inline" formControlName="type">
                 <nb-radio
                   *ngFor="let option of options"
@@ -86,13 +101,12 @@
           </div>
 
           <div class="form-group">
-              <button nbButton hero status="primary"
-                      >
-                Salvar
-              </button>
+            <button nbButton hero status="primary">
+              Salvar
+            </button>
           </div>
 
-    <!--      <pre>{{resourceForm.valueChanges |async | json}}</pre>-->
+          <!--      <pre>{{resourceForm.valueChanges |async | json}}</pre>-->
         </form>
 
       </nb-card-body>

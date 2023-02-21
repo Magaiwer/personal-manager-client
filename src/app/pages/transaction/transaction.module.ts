@@ -8,11 +8,6 @@ import {SharedModule} from '../../../shared/shared.module';
 import {CurrencyMaskModule} from 'ng2-currency-mask';
 
 
-export const routes = [
-  { path: '', component: TransactionListComponent },
-];
-
-
 @NgModule({
   declarations: [TransactionListComponent, TransactionFormComponent, TransactionListComponent],
   imports: [
