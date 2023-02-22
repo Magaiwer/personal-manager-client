@@ -52,7 +52,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     }
   }
 
-  loadResource() {
+  async loadResource() {
     if (this.currentAction === 'edit') {
       this.route.paramMap
         .pipe(
@@ -62,11 +62,8 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
           resource => {
             BaseResourceFormComponent.resourceLoadedEmitter.emit(resource);
             this.resource = resource;
-            console.info('Edit', this.resource);
             // @ts-ignore
-            this.resourceForm.controls['date']?.patchValue(this.textToDate(this.resource?.date));
-            // @ts-ignore
-            this.resourceForm.controls['categoryId']?.patchValue((this.resource?.category.id));
+            this.resource?.date = this.textToDate(this.resource?.date);
             this.resourceForm.patchValue(resource, {emitEvent: true});
           },
           error => this.showToast('danger', 'Ocorreu um erro no servidor, tente mais tarde.'),

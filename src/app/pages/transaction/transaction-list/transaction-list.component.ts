@@ -19,7 +19,7 @@ export class TransactionListComponent extends BaseResourceListComponent<Transact
               protected categoryService: CategoryService,
   ) {
     super(transactionService);
-    this.displayedColumns = ['name', 'category', 'amount', 'actions'];
+    this.displayedColumns = ['date','name', 'category', 'amount', 'actions'];
   }
 
   ngOnInit() {

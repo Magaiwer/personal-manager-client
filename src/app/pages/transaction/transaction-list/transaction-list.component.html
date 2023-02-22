@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="col-md-6 pt-2">
-        <span class="text-lg-center"> Listagem de Lançamentos - ALTERADA</span>
+        <span class="text-lg-center"> Lançamentos Receitas e Despesas</span>
       </div>
     </div>
     <ngx-filters></ngx-filters>
@@ -22,24 +22,30 @@
       <div class=" table table-hover  mat-elevation-z8  ">
         <table mat-table [dataSource]="dataSource" matSort class="table p-2  mat-elevation-z8">
 
-          <div matColumnDef="name">
-            <th *matHeaderCellDef mat-sort-header> Lançamento</th>
+          <div matColumnDef="date">
+            <th *matHeaderCellDef mat-sort-header> Data</th>
             <td *matCellDef="let element">
-              <span class="font-weight-bold">{{element.name}}</span>
-              <br>
-              <small class="text-success ">{{element.date | date:"dd/MM/yyyy"}}</small>
-              <br>
-              <span class="break-line" *ngIf="element.description">{{element.description}}</span>
+              <span>{{element.date | date:"dd/MM/yyyy"}}</span>
             </td>
             <td *matFooterCellDef>
               <span class="font-weight-bold"> Saldo </span>
             </td>
           </div>
 
+          <div matColumnDef="name">
+            <th *matHeaderCellDef mat-sort-header> Lançamento</th>
+            <td *matCellDef="let element">
+              <span class="font-weight-bold">{{element.name}}</span>
+              <br>
+              <span class="break-line" *ngIf="element.description">{{element.description}}</span>
+            </td>
+            <td *matFooterCellDef></td>
+          </div>
+
           <ng-container matColumnDef="category">
             <th *matHeaderCellDef mat-sort-header> Categoria</th>
             <td *matCellDef="let element">
-              <span>{{element.category.name}}</span>
+              <span>{{element.categoryName}}</span>
             </td>
             <td *matFooterCellDef></td>
           </ng-container>
