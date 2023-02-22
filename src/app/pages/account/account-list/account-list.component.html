@@ -1,0 +1,61 @@
+<nb-card>
+
+  <nb-card-header>
+    <div class="row">
+      <div class="col-md-5">
+
+        <button mat-icon-button [routerLink]="['new']" routerLinkActive="router-link-active">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="col-md-6 pt-2">
+        <span class="text-lg-center"> Listagem de Contas</span>
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <div fxLayout="column" class="p-2">
+      <div class="p-2">
+
+        <mat-table #table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> No.</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nome</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Descrição</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+          </ng-container>
+
+          <!-- Actions-->
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <button [routerLink]="[element.id, 'edit']" mat-icon-button class="iconbutton" color="primary">
+                <!--<mat-icon aria-label="Edit">edit</mat-icon>-->
+                <nb-icon icon="edit"></nb-icon>
+              </button>
+              <button mat-icon-button (click)="onDelete(element)" class="iconbutton" color="warn">
+                <!--<mat-icon aria-label="Delete">delete</mat-icon>-->
+                <nb-icon icon="trash"></nb-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator [length]="recordCount" [pageSize]="pageSize" [pageSizeOptions]="displayedPageSizeOptions">
+        </mat-paginator>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

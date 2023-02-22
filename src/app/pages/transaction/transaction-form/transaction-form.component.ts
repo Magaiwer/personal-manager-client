@@ -6,9 +6,9 @@ import {BaseResourceFormComponent} from '../../../../shared/components/base-reso
 import {Transaction} from '../shared/transaction.model';
 import {TransactionService} from '../shared/transaction.service';
 import {Category} from '../../category/shared/category.model';
-import {Account} from "../../account/shared/account.model";
+import {Account} from '../../account/shared/account.model';
 import {CategoryService} from '../../category/shared/category.service';
-import {AccountService} from "../../account/shared/account.service";
+import {AccountService} from '../../account/shared/account.service';
 import {PageableWrapper} from '../../../../shared/service/pageable-wrapper';
 
 @Component({
@@ -77,12 +77,11 @@ export class TransactionFormComponent extends BaseResourceFormComponent<Transact
     this.accountService.findAll().subscribe(
       (accounts: PageableWrapper) => {
         this.accounts = accounts.content;
-        if (this.accounts.length == 1 && !this.accountIdControl.value ) {
+        if (this.accounts.length === 1 && !this.accountIdControl.value ) {
           this.accountIdControl.setValue(this.accounts[0]?.id);
           this.disableAccount = true;
         }
-      }
-    );
+      });
   }
 
   get typeOptions(): Array<any> {
