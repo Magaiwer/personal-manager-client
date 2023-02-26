@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Inject, Injectable, OnInit} from '@angular/core';
+import { AfterViewInit, Component, Inject, Injectable, OnInit, Injector } from '@angular/core';
 
 import {BaseResourceListComponent} from '../../../../shared/components/base-resource-list/base-resource-list.component';
 import {Transaction} from '../shared/transaction.model';
@@ -17,8 +17,9 @@ export class TransactionListComponent extends BaseResourceListComponent<Transact
   constructor(protected transactionService: TransactionService,
               protected dateService: NbDateService<Date>,
               protected categoryService: CategoryService,
+              protected injector: Injector
   ) {
-    super(transactionService);
+    super(transactionService, injector);
     this.displayedColumns = ['date','name', 'category', 'amount', 'actions'];
   }
 

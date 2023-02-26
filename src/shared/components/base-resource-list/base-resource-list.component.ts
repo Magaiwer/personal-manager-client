@@ -1,4 +1,5 @@
-import {AfterViewInit, Component, Directive, OnInit, ViewChild} from '@angular/core';
+import { NbComponentStatus, NbToastrService } from '@nebular/theme';
+import {AfterViewInit, Component, Directive, Injector, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 
@@ -24,12 +25,18 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
   public recordCount: number;
   public isPageable: boolean = true;
   public resources: T[];
+  private toastService : NbToastrService;
+
+  private HTTP_4xx = '4';
 
   public showSearch = false;
 
-  protected constructor(protected resourceService: BaseResourceService<T>) {
+  protected constructor(protected resourceService: BaseResourceService<T>,
+                        protected injector: Injector,
+    ) {
     this.resourceService = resourceService;
     this.dataSource = new CustomDataSource<T>(this.resourceService);
+    this.toastService = this.injector.get(NbToastrService);
 
   }
 
@@ -89,12 +96,28 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
         .pipe(take(1))
         .subscribe(
           () => this.loadData(),
+          error => this.actionsForError(error),
         );
     }
   }
 
   loadResources() {
     this.dataSource.data.asObservable().subscribe(d => this.resources = d);
+  }
+
+
+  protected actionsForError(error) {
+    let message = 'Ocorreu um erro ao processar a sua solicitação!';
+   if (error.status.toString().startsWith(this.HTTP_4xx)) {
+      message = error.error.userMessage ? error.error.userMessage : message;
+      this.showToast('danger', message);
+    } else {
+      this.showToast('danger', message);
+    }
+  }
+
+  protected showToast(status: NbComponentStatus, message: String) {
+    this.toastService.show(message, null, {status});
   }
 
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, Injector } from '@angular/core';
 import {BaseResourceListComponent} from '../../../../shared/components/base-resource-list/base-resource-list.component';
 import {Account} from '../shared/account.model';
 import {AccountService} from '../shared/account.service';
@@ -11,8 +11,9 @@ import {AccountService} from '../shared/account.service';
 export class AccountListComponent extends BaseResourceListComponent<Account> implements OnInit {
 
   constructor(protected accountService: AccountService,
+              protected injector: Injector
   ) {
-    super(accountService);
+    super(accountService, injector );
     this.displayedColumns = ['id', 'name', 'description', 'actions'];
   }
 }

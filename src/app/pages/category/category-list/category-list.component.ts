@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, Injector } from '@angular/core';
 
 import {BaseResourceListComponent} from '../../../../shared/components/base-resource-list/base-resource-list.component';
 import {Category} from '../shared/category.model';
@@ -12,8 +12,9 @@ import {CategoryService} from '../shared/category.service';
 export class CategoryListComponent extends BaseResourceListComponent<Category> implements OnInit {
 
   constructor(protected categoryService: CategoryService,
+    protected injector: Injector
   ) {
-    super(categoryService);
+    super(categoryService, injector);
     this.displayedColumns = ['id', 'name', 'description', 'actions'];
   }
 
