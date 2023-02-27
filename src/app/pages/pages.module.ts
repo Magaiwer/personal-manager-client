@@ -8,6 +8,7 @@ import {PagesRoutingModule} from './pages-routing.module';
 import {SharedModule} from '../../shared/shared.module';
 
 import {CurrencyMaskConfig, CurrencyMaskModule, CURRENCY_MASK_CONFIG} from 'ng2-currency-mask';
+import { UserRegistrationComponent } from './user/user-registration/user-registration.component';
 
 export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   align: 'right',
@@ -31,6 +32,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
   ],
   declarations: [
     PagesComponent,
+    UserRegistrationComponent,
   ],
   providers: [
     {provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig},

@@ -41,7 +41,7 @@ import {NbDateFnsDateModule} from '@nebular/date-fns';
 
 
 const formSetting: any = {
-  redirectDelay: 0,
+  redirectDelay: 3000,
   showMessages: {
     success: true,
     error: true,
@@ -85,10 +85,25 @@ const formSetting: any = {
             endpoint: 'login',
             defaultErrors: ['Email/senha estão incorretos, tente novamente!'],
           },
+          register: {
+            redirect: {
+              success: '/auth/login',
+              failure: null,
+            },
+            requireValidToken: false,
+            endpoint: 'user/register',
+            defaultErrors: ['Não foi possível realizar o cadastro, tente novamente!'],
+            defaultMessages: ['Cadastro realizado com sucesso.'],
+          },
           logout: {
             redirect: {
               success: '/auth/login',
               failure: null,
+            },
+          },
+          errors: {
+            getter: (module, res, options) => {
+              return res.error ? res.error.userMessage : options[module].defaultErrors;
             },
           },
         }),

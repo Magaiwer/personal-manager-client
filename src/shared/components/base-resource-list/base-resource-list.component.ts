@@ -111,6 +111,8 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
    if (error.status.toString().startsWith(this.HTTP_4xx)) {
       message = error.error.userMessage ? error.error.userMessage : message;
       this.showToast('danger', message);
+
+
     } else {
       this.showToast('danger', message);
     }
