@@ -23,8 +23,8 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     this.url = this.url + apiPath;
   }
 
-  findAll(): Observable<PageableWrapper | T[]> {
-    return this.http.get<PageableWrapper | T[]>(this.url);
+  findAll(pathExtend = ''): Observable<PageableWrapper | T[]> {
+    return this.http.get<PageableWrapper | T[]>(this.url + pathExtend);
   }
 
   findAllPageable(sort = '', order = 'asc', page = 0, size = 10): Observable<PageableWrapper> {

@@ -60,16 +60,20 @@ export class TransactionFormComponent extends BaseResourceFormComponent<Transact
   }
 
   protected reset(): void {
-    this.resourceForm.reset({
+     this.resourceForm.reset({
       name: null,
       description: null,
+      amount: 0,
+      date: new Date(),
+      accountId: this.accountIdControl.value,
       category: [],
     });
+    this.resetFocus();
   }
 
   private loadCategories() {
-    this.categoryService.findAll().subscribe(
-      (categories: PageableWrapper) => this.categories = categories.content,
+    this.categoryService.findAll('/all').subscribe(
+      (categories: Category[]) => this.categories = categories,
     );
   }
 
@@ -96,6 +100,12 @@ export class TransactionFormComponent extends BaseResourceFormComponent<Transact
   }
 
   ngAfterViewInit() {
+    this.resetFocus();
+
+
+  }
+
+  private resetFocus() {
     this.setFocus('name');
   }
 
