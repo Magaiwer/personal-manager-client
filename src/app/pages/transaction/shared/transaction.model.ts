@@ -21,6 +21,17 @@ export class Transaction extends BaseResourceModel {
     DESPESA: 'EXPENSE',
     RECEITA: 'INCOME',
   };
+
+  static typeOptions(): Array<any> {
+    return Object.entries(Transaction.TYPES).map(
+      ([label, value]) => {
+        return {
+          label: label,
+          value: value,
+        };
+      },
+    );
+  }
 }
 
 

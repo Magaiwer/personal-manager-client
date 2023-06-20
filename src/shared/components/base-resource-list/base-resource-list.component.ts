@@ -8,8 +8,7 @@ import {BaseResourceService} from '../../service/base-resource.service';
 import {CustomDataSource} from '../../custom-datasource/custom-datasource';
 
 import {merge} from 'rxjs';
-import {take, tap} from 'rxjs/operators';
-import {PageableWrapper} from '../../service/pageable-wrapper';
+import { take, tap, filter } from 'rxjs/operators';
 
 @Component({
   template: '',
@@ -25,6 +24,7 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
   public recordCount: number;
   public isPageable: boolean = true;
   public resources: T[];
+  public filterValues: any = {};
   private toastService : NbToastrService;
 
   private HTTP_4xx = '4';
@@ -41,8 +41,9 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
   }
 
   ngOnInit() {
+    console.log('Filtro oriundo from chield component', this.filterValues);
     this.loadResources();
-    this.dataSource.loadDataSource(this.displayedColumns[0], 'asc', 0, this.pageSize, this.isPageable);
+    this.dataSource.loadDataSource(this.displayedColumns[0], 'asc', 0, this.pageSize, this.isPageable, this.filterValues);
     this.dataSource.recordCount$.subscribe(value => this.recordCount = value);
   }
 

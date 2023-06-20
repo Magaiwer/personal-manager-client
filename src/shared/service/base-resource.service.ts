@@ -1,9 +1,11 @@
 import { Injectable, Injector, Type } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BaseResourceModel} from '../model/base-resource.model';
 
 import {environment} from '../../environments/environment';
 import {PageableWrapper} from './pageable-wrapper';
+import { formatISO } from 'date-fns';
+import { DateUtil } from '../../shared/util/date-util';
 
 import {Observable, throwError} from 'rxjs';
 import {map, take} from 'rxjs/operators';
@@ -27,13 +29,20 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     return this.http.get<PageableWrapper | T[]>(this.url + pathExtend);
   }
 
-  findAllPageable(sort = '', order = 'asc', page = 0, size = 10): Observable<PageableWrapper> {
-    const params = new HttpParams()
+  findByFilterPageable(sort = '', order = 'asc', page = 0, size = 10, filters = {}, pathExtend = ''): Observable<PageableWrapper | T[]> {
+    let params = new HttpParams()
       .set('size', size.toString())
       .set('sort', sort + ',' + order)
       .set('page', page.toString());
 
-    return this.http.get<PageableWrapper>(this.url, {params});
+    for (const [key, value] of Object.entries<any>(filters)) {
+      pathExtend = '/filter'
+      if(value) {
+        params = params.append(key, DateUtil.isDate(value) ? formatISO(value) : value );
+      }
+    }
+    const urlComplete = this.url + pathExtend;
+    return this.http.get<PageableWrapper| T[]>(urlComplete, {params});
   }
 
   findById(id: number): Observable<T> {

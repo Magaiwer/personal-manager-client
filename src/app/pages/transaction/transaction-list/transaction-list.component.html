@@ -12,7 +12,73 @@
         <span class="text-lg-center"> Lançamentos Receitas e Despesas</span>
       </div>
     </div>
-    <ngx-filters></ngx-filters>
+
+    <nb-card-header>
+      <nb-accordion>
+        <nb-accordion-item expanded = 'true'>
+            <nb-accordion-item-header>Filtros</nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <form [formGroup]="filtersForm" (ngSubmit)="onSubmit()">
+              <div class="form-row">
+
+                <div class="form-group col-md-3">
+
+                      <nb-select multiple fullWidth id="accountId" placeholder="Filtrar conta" formControlName="accountsIds">
+                        <nb-option>Limpar</nb-option>
+                        <nb-option  *ngFor="let account of accounts"
+                                    [value]="account.id">{{ account.name }}
+
+                        </nb-option>
+                      </nb-select>
+                    </div>
+
+                <div class="form-group col-md-3">
+                  <nb-select multiple fullWidth id="categoryId" placeholder="Filtrar categoria" formControlName="categoriesIds">
+                    <nb-option>Limpar</nb-option>
+                    <nb-option  *ngFor="let category of categories"
+                                [value]="category.id">{{ category.name }}
+
+                    </nb-option>
+                  </nb-select>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <input fullWidth nbInput placeholder="Selecionar mês"
+                        [nbDatepicker]="datePicker" formControlName="monthDate"
+                        id="month">
+                  <nb-datepicker #datePicker format="MM/yyyy"></nb-datepicker>
+                </div>
+
+                <div class="form-group col-md-3">
+<!--                   <label for="tipo" class="label">Tipo</label> -->
+                  <div class="form-row">
+                    <nb-radio-group id="tipo" class="form-check-inline" formControlName="type">
+                      <nb-radio
+                        *ngFor="let option of options"
+                        [value]="option.value">
+                        {{ option.label }}
+                      </nb-radio>
+                    </nb-radio-group>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+
+                <div class="form-group col-md-12 center" align="center">
+                    <button nbButton hero status="primary">
+                      buscar
+                    </button>
+
+                </div>
+
+              </div>
+            </form>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+      </nb-accordion>
+    </nb-card-header>
+
   </nb-card-header>
 
   <nb-card-body>

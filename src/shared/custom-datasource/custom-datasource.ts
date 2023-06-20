@@ -1,6 +1,6 @@
 import {CollectionViewer, DataSource} from '@angular/cdk/collections';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {catchError, finalize} from 'rxjs/operators';
+import { catchError, finalize, filter } from 'rxjs/operators';
 
 import {BaseResourceService} from '../service/base-resource.service';
 import {PageableWrapper} from '../service/pageable-wrapper';
@@ -28,11 +28,11 @@ export class CustomDataSource<T> extends DataSource<T> {
   }
 
   loadDataSource(sort = '', order = 'asc', pageIndex = 0, pageSize = 10,
-                 isPageable = true): void {
+                 isPageable = true, filter = {}): void {
     this.isLoading.next(true);
 
     if (isPageable) {
-      this.resourceService.findAllPageable(sort, order, pageIndex, pageSize)
+      this.resourceService.findByFilterPageable(sort, order, pageIndex, pageSize, filter)
         .pipe(
           catchError(() => of([])),
           finalize(() => this.isLoading.next(false)),

@@ -1,3 +1,4 @@
+import { NbDateFnsDateModule } from '@nebular/date-fns';
 import { NgModule } from '@angular/core';
 import {
   NbAccordionModule,
@@ -12,7 +13,7 @@ import {
   NbUserModule,
 } from '@nebular/theme';
 
-import {FormsModule as ngFormsModule} from '@angular/forms';
+import { FormsModule as ngFormsModule, ReactiveFormsModule } from '@angular/forms';
 import {ThemeModule} from '../app/@theme/theme.module';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {MatTableModule} from '@angular/material/table';
@@ -25,7 +26,6 @@ import {MatInputModule} from '@angular/material/input';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatSortModule} from '@angular/material/sort';
 import {FormFieldErrorComponent} from './components/form-field-error/form-field-error.component';
-import {FiltersComponent} from './components/filters/filters.component';
 import {CalendarModule} from 'primeng/calendar';
 
 
@@ -60,6 +60,8 @@ import {CalendarModule} from 'primeng/calendar';
     FlexLayoutModule,
     NbAccordionModule,
     CalendarModule,
+    ReactiveFormsModule,
+    NbDateFnsDateModule,
   ],
   exports: [
     ThemeModule,
@@ -91,11 +93,11 @@ import {CalendarModule} from 'primeng/calendar';
     FlexLayoutModule,
     FormFieldErrorComponent,
     NbAccordionModule,
-    FiltersComponent,
+    ReactiveFormsModule,
+    NbDateFnsDateModule,
   ],
   declarations: [
     FormFieldErrorComponent,
-    FiltersComponent,
   ],
 })
 export class SharedModule {

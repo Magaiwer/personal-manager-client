@@ -35,7 +35,7 @@ export class TransactionFormComponent extends BaseResourceFormComponent<Transact
     this.loadCategories();
     this.loadAccounts();
     super.ngOnInit();
-    this.options = this.typeOptions;
+    this.options = Transaction.typeOptions();
     BaseResourceFormComponent.resourceLoadedEmitter
       .subscribe(value => {
         console.info('on init category', value);
@@ -88,21 +88,10 @@ export class TransactionFormComponent extends BaseResourceFormComponent<Transact
       });
   }
 
-  get typeOptions(): Array<any> {
-    return Object.entries(Transaction.TYPES).map(
-      ([label, value]) => {
-        return {
-          label: label,
-          value: value,
-        };
-      },
-    );
-  }
+
 
   ngAfterViewInit() {
     this.resetFocus();
-
-
   }
 
   private resetFocus() {
