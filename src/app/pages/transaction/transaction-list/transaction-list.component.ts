@@ -94,11 +94,9 @@ export class TransactionListComponent extends BaseResourceListComponent<Transact
   }
 
   private buildResourceForm(): void {
-    let date = new Date();
-    date.setMonth(new Date().getMonth() -3)
     this.filtersForm = this.formBuilder.group({
      type: [null],
-      monthDate: [date],
+      monthDate: [new Date()],
       categoriesIds: [],
       accountsIds: [],
     });

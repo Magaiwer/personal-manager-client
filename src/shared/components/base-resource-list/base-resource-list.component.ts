@@ -80,6 +80,8 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
       this.sort.direction,
       this.paginator.pageIndex,
       this.paginator.pageSize,
+      true,
+      this.filterValues
     );
   }
 
