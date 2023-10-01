@@ -19,7 +19,7 @@ export abstract class BaseResourceListComponent<T extends BaseResourceModel> imp
   @ViewChild(MatSort) sort: MatSort;
   public dataSource: CustomDataSource<T>;
   public displayedColumns = Array<string>();
-  public displayedPageSizeOptions = [5, 10, 20, 25, 50];
+  public displayedPageSizeOptions = [5, 10, 20, 25, 50, 100, 150, 200];
   public pageSize = 20;
   public recordCount: number;
   public isPageable: boolean = true;
